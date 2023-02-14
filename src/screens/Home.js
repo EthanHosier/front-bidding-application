@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import CurrencyInput from 'react-currency-input-field';
+import { Link } from 'react-router-dom';
 
 const LIMIT = 1.04
 
@@ -19,17 +20,22 @@ const Home = () => {
     return (
 
         <>
-            <div className="lg:right-10 flex items-center flex-1 justify-end mr-8 lg:mr-10 mt-5">
-                <div className="align-center bg-white rounded-lg flex items-center p-2 px-4 p-2 mr-3">
-                    <i className="fa-solid fa-dollar-sign text-sky-400 mr-1 text-md md:text-xl"></i>
-                    <p className="font-semibold text-md md:text-xl lg:text-2xl">1.04</p>
+            <div className="lg:right-10 flex items-center flex-1 justify-between mx-8 lg:mx-10 mt-5">
 
-                    <button className="rounded  bg-sky-400 items-center justify-center flex ml-2 ">
-                        <i className="text-white p-1 fa-solid fa-plus text-xs md:text-md lg:text-lg "></i>
-                    </button>
+                <p className='font-semibold'>Go on. Chose This Image ...</p>
+
+                <div className='flex items-center'>
+                    <div className="align-center bg-white rounded-lg flex items-center p-2 px-4 p-2 mr-3">
+                        <i className="fa-solid fa-dollar-sign text-sky-400 mr-1 text-md md:text-xl"></i>
+                        <p className="font-semibold text-md md:text-xl lg:text-2xl">1.04</p>
+
+                        <button className="rounded  bg-sky-400 items-center justify-center flex ml-2 ">
+                            <i className="text-white p-1 fa-solid fa-plus text-xs md:text-md lg:text-lg "></i>
+                        </button>
+                    </div>
+                
+                <Link className="aspect-square rounded-full bg-sky-400 w-12 md:w-14 lg:w-20 lg:ml-4 flex items-center justify-center" to={"Profile"}><i className="fa-solid fa-user text-white text-xl md:text-2xl lg:text-3xl"></i></Link>
                 </div>
-
-                <button className="aspect-square rounded-full bg-sky-400 w-12 md:w-14 lg:w-20 lg:ml-4"><i className="fa-regular fa-user text-white text-xl md:text-2xl lg:text-3xl"></i></button>
             </div>
 
             <div className=" w-screen items-center justify-center flex mt-8">
@@ -71,8 +77,6 @@ const Home = () => {
                         </div>
 
                     </div>
-
-
                 </div>
             </div>
         </>
