@@ -19,3 +19,47 @@ code {
     monospace;
 }
 
+/*To handle picture size*/
+
+#picture{
+  width: 350px;
+  height: 350px;
+}
+
+@media screen and (min-width: 640px) {
+  #picture {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #picture {
+    width: 600px;
+    height: 600px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #picture {
+    width: 700px;
+    height: 700px;
+  }
+}
+
+/*
+@media screen and (min-width: 1280px) {
+  #picture {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  #picture {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+*/
