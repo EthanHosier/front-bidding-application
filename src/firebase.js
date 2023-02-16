@@ -4,16 +4,18 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 
+console.log(process.env.REACT_APP_API_KEY)
+
 //TODO: PUT THESE IN A .env FILE
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID,
-};
+    apiKey: "AIzaSyBXMAtYrsS32q337z_3oJfR6-QVAmx1vy8",
+    authDomain: "choosethisimage.firebaseapp.com",
+    projectId: "choosethisimage",
+    storageBucket: "choosethisimage.appspot.com",
+    messagingSenderId: "556732070077",
+    appId: "1:556732070077:web:92c43cdbbbeb7525239fd4",
+    measurementId: "G-RHMC523GRX"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

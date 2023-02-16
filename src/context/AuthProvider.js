@@ -1,15 +1,17 @@
 import { createContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged, signOut, GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { async } from '@firebase/util';
+import { doc, onSnapshot } from "firebase/firestore";
+
 
 const AuthContext = createContext({});
 const provider = new GoogleAuthProvider();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [imageUrl, setImageUrl] = useState("")
   const [loading, setLoading] = useState(true)
-  const [accessToken, setAccessToken] = useState("")
 
   useEffect(
     () => onAuthStateChanged(auth, (user) => {
@@ -30,6 +32,11 @@ export const AuthProvider = ({ children }) => {
     signOut(auth).catch((error) => console.log(error)).finally(setLoading(false))
   }
 
+  const getAccessToken = async() => {
+    const token = await auth.currentUser.getIdToken(true);
+    return token;
+  }
+
   const signInWithGoogle = () => {
     const auth = getAuth();
     signInWithPopup(auth, provider)
@@ -40,7 +47,6 @@ export const AuthProvider = ({ children }) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         
-        setAccessToken(token)
 
         // The signed-in user info.
         const user = result.user;
@@ -62,7 +68,8 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     signInWithGoogle,
-    logout
+    logout,
+    getAccessToken
   }), [user, loading])
 
   return (

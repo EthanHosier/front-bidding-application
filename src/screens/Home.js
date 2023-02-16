@@ -1,8 +1,12 @@
+import { async } from '@firebase/util';
 import React, { useState } from 'react'
 import CurrencyInput from 'react-currency-input-field';
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import useSocket from "../hooks/useSocket"
 
 const LIMIT = 1.04
+const DEFAULT_BID = 0.99;
 
 const DUMMY_DATA = [
     { name: "Sophia Johnson", bid: (Math.floor(Math.random() * 10000) + 1) / 100 },
@@ -12,11 +16,24 @@ const DUMMY_DATA = [
     { name: "Olivia Davis", bid: (Math.floor(Math.random() * 10000) + 1) / 100 }
 ].sort((a, b) => b.bid - a.bid);
 
+
+
+
 const Home = () => {
 
-    const [enteredBid, setEnteredBid] = useState(0);
+    const [enteredBid, setEnteredBid] = useState(DEFAULT_BID);
+    const {user, signInWithGoogle} = useAuth();
+    const {submitBid, bids} = useSocket();
+    
 
-    //TODO: order screen using grid instead of current setup (so can do different sizes easily)
+    const onClickSignIn = async() => {
+        await signInWithGoogle();
+    }
+
+    const onSubmitBid = async() => {
+        await submitBid(enteredBid)
+    }
+
     return (
 
         <>
@@ -27,7 +44,7 @@ const Home = () => {
                 <div className='flex items-center'>
                     <div className="align-center bg-white rounded-lg flex items-center p-2 px-4 p-2 mr-3">
                         <i className="fa-solid fa-dollar-sign text-sky-400 mr-1 text-md md:text-xl"></i>
-                        <p className="font-semibold text-md md:text-xl lg:text-2xl">1.04</p>
+                        <p className="font-semibold text-md md:text-xl lg:text-2xl">{1.04}</p>
 
                         <button className="rounded  bg-sky-400 items-center justify-center flex ml-2 ">
                             <i className="text-white p-1 fa-solid fa-plus text-xs md:text-md lg:text-lg "></i>
@@ -52,17 +69,20 @@ const Home = () => {
 
                     </div>
                     <div className="flex-1 items-center justify-center flex p-3 order-3 flex-col lg:ml-10 ">
+                        
+                        {user? 
                         <div className='flex flex-row mt-3 items-center'>
                             <button
                                 className={` rounded-full w-20 text-white font-semibold mr-5 lg:text-2xl lg:px-3 lg:py-2 ${enteredBid > LIMIT ? "bg-red-600" : "bg-sky-400"}`}
                                 disabled={enteredBid > LIMIT}
+                                onClick={onSubmitBid}
                             >Bid</button>
                             <CurrencyInput
                                 id="input-example"
                                 name="input-name"
                                 placeholder="Please enter a number"
                                 decimalsLimit={2}
-                                defaultValue={1.05}
+                                defaultValue={DEFAULT_BID}
                                 onValueChange={(val) => setEnteredBid(val)}
                                 className="w-20 rounded-lg text-center lg:text-2xl lg:py-2"
                                 style={{ color: enteredBid > LIMIT && "red" }}
@@ -70,9 +90,12 @@ const Home = () => {
                                 prefix="$"
                             />
                         </div>
+                        :
+                        <p className='text-lg'>Please <span className="text-sky-400 font-semibold cursor-pointer" onClick={onClickSignIn}>Sign in</span> to submit bids.</p>    
+                    }
                         <div className='flex-col mt-10 items-center'>
-                            {DUMMY_DATA.map((d, i) => {
-                                return <p className={`text-center ${i === 0 ? "text-green-600 font-semibold" : "text-red-600"}`}>{d.name}: ${d.bid}</p>
+                            {bids.map((d, i) => {
+                                return <p className={`text-center ${i === 0 ? "text-green-600 font-semibold" : "text-red-600"}`} key={i}>{d.name}: ${d.bid}</p>
                             })}
                         </div>
 

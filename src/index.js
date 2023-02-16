@@ -4,14 +4,16 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
-
+import { SocketProvider } from './context/SocketProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthProvider>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <SocketProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </SocketProvider>
     </AuthProvider>
 );
 
