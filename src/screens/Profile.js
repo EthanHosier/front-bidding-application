@@ -5,7 +5,6 @@ import Cropper from 'react-easy-crop'
 import ImagePicker from '../components/ImagePicker';
 import { async } from '@firebase/util';
 
-const DISPLAY_NAME = "Ethan Hosier"
 const IMAGE = '';
 
 const Profile = () => {
@@ -74,7 +73,7 @@ const Profile = () => {
             {
                 user ? (
                     <div>
-                        <p className='mx-8 lg:mx-10 text-sk text-sm md:text-base'>Display Name: {DISPLAY_NAME}</p>
+                        <p className='mx-8 lg:mx-10 text-sk text-sm md:text-base'>Display Name: {user?.displayName}</p>
                         <p className='mx-8 lg:mx-10 text-sk mt-4 text-sm md:text-base'>Image preview: </p>
 
                         { loading? <p>Loading...</p> :
